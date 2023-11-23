@@ -67,3 +67,7 @@ inventario2.mostrarInventario();
 
 
 ```
+
+## Challenge
+
+![imagen](https://static.platzi.com/media/public/uploads/reto-singleton_7ff63b28-b778-47c5-a14e-5801196dd586.png)
