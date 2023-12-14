@@ -39,14 +39,14 @@ class BaseCar {
  
  // STEP 2
  class MastodonCar extends BaseCar {
-   /** @override showCost() method */
+
    showCost() {
      console.log('[MASTODON] Car Cost: 300,000 MXN');
    }
  }
  
  class RhinoCar extends BaseCar {
-   /** @override showCost() method */
+
    showCost() {
      console.log('[RHINO] Car Cost: 100,000 MXN');
    }
@@ -61,29 +61,20 @@ class BaseCar {
  
  // STEP 4
  class MastodonCarFactory extends CarFactory {
-   /**
-    * @override makeCar() method
-    * @returns MastodonCar
-    */
+
    makeCar() {
      return new MastodonCar();
    }
  }
  
  class RhinoCarFactory extends CarFactory {
-   /**
-    * @override makeCar() method
-    * @returns RhinoCar
-    */
+
    makeCar() {
      return new RhinoCar();
    }
  }
  
- /**
-  * Main function
-  * @param {CarFactory} factory Car factory
-  */
+
  function appFactory(factory) {
    console.log('--- [JS] Calling appFactory ---\n');
  
@@ -96,18 +87,11 @@ class BaseCar {
    car.showCost();
  }
  
- /**
-  * You could change the Factory as you wish since
-  * all of them implement the same behaviour.
-  */
+
  appFactory(new MastodonCarFactory());
  appFactory(new RhinoCarFactory());
  
- /**
-  *
-  * @param {string} type type of factory to create
-  * @returns {MastodonCarFactory | RhinoCarFactory} A car factory instance
-  */
+
  function createFactory(type) {
    const factories = {
      mastodon: MastodonCarFactory,
@@ -118,10 +102,6 @@ class BaseCar {
    return new FactoryClass();
  }
  
- /**
-  * Instead of using new() operator, we abstract the
-  * factories creation and we just indicate the type
-  * as a parameter
-  */
+
  appFactory(createFactory('mastodon'));
  appFactory(createFactory('rhino'));
