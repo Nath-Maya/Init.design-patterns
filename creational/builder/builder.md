@@ -1,53 +1,122 @@
 # ⚒️ Builder
 
+El patrón de diseño Builder se utiliza para construir un objeto complejo paso a paso. Este patrón separa la construcción de un objeto de su representación, permitiendo que el mismo proceso de construcción pueda crear diferentes representaciones.
 
+###Estructura del Patrón Builder:
+- **Builder (Constructor):** Define una interfaz abstracta para crear partes de un producto.
+- **ConcreteBuilder (Constructor Concreto):** Implementa la interfaz Builder y construye y ensambla partes del producto.
+- **Director:** Construye un objeto usando la interfaz Builder.
+- **Producto:** Representa el objeto complejo que se está construyendo.
 
 ![Builder](https://reactiveprogramming.io/_next/image?url=%2Fbooks%2Fpatterns%2Fimg%2Fpatterns-articles%2Fbuilder-diagram.png&w=3840&q=75)
 
-✅ Abstracción de la Creación: Permite al cliente crear objetos sin conocer los detalles específicos de su implementación, abstrayendo la creación de objetos.
+**Ventajas:**
 
-✅ Desacopla el Código del Cliente: El cliente puede trabajar con objetos a través de una interfaz común sin preocuparse por las clases concretas que están instancias.
+✅ **Separación de preocupaciones:** Permite construir un objeto paso a paso y aísla el código de construcción del código de representación
 
-✅ Flexibilidad en la Creación: Facilita la introducción de nuevas clases concretas sin cambiar el código d
+✅ **Reutilización de código:** Los mismos pasos de construcción pueden ser utilizados para construir diferentes representaciones del objeto.
 
-Desventajas:
+✅ **Facilita la variabilidad:** Puedes tener diferentes Builders para crear productos con variaciones sin cambiar el código del Director.
 
-❌  Complejidad Adicional: Introducir una jerarquía de clases adicionales para la creación puede aumentar la complejidad del código.
+**Desventajas:**
 
-❌ Aumento del Número de Clases: Puede llevar a un mayor número de clases en el sistema, especialmente si se utilizan fábricas co
+❌  **Complejidad adicional:** Agrega más clases al sistema, lo que puede ser innecesario si el objeto que estás construyendo no es muy complejo ni su construcción varía significativamente.
 
-❌ Confusión en la Selección de Fábricas: Puede haber confusión sobre qué fábrica
 
 ### Cuándo Usar:
 
-Cuando un sistema debe ser independiente de cómo se crean, componen y representan sus objetos.
+Cuando quieras evitar un constructor telescópico. 
 
-Cuando un sistema debe ser confiado
-
-Cuando se necesita una jerarquía de clases para la creación de objetos.
+Cuando se quiera tener control del proceso de creación.
 
 ### Ejemplo:
 
 ```shell
-+----------------------+         +---------------------+
-|    AbstractFactory   |         |   ConcreteFactory   |
-+----------------------+         +---------------------+
-| +createPersonaje()   |         | +createPersonaje()  |
-+----------------------+         +---------------------+
-                  \                      /
-                   \                    /
-                    \                  /
-              +-------------+   +-------------+
-              |  Personaje  |   |  Guerrero   |
-              +-------------+   +-------------+
-              | +atacar()    |   | +atacar()   |
-              | +defender()  |   | +defender() |
-              +-------------+   +-------------+
+// Producto
+class Car {
+  constructor() {
+    this.parts = [];
+  }
 
+  addPart(part) {
+    this.parts.push(part);
+  }
+
+  showInfo() {
+    console.log(`Car parts: ${this.parts.join(', ')}`);
+  }
+}
+
+// Builder abstracto
+class CarBuilder {
+  constructor() {
+    this.car = new Car();
+  }
+
+  build() {
+    return this.car;
+  }
+
+  addWheels() {}
+  addEngine() {}
+  addInterior() {}
+}
+
+// Constructores concretos
+class SedanCarBuilder extends CarBuilder {
+  addWheels() {
+    this.car.addPart('Sedan Wheels');
+  }
+
+  addEngine() {
+    this.car.addPart('Sedan Engine');
+  }
+
+  addInterior() {
+    this.car.addPart('Luxury Interior');
+  }
+}
+
+class SUVCarBuilder extends CarBuilder {
+  addWheels() {
+    this.car.addPart('SUV Wheels');
+  }
+
+  addEngine() {
+    this.car.addPart('Powerful SUV Engine');
+  }
+
+  addInterior() {
+    this.car.addPart('Standard Interior');
+  }
+}
+
+// Director
+class CarDirector {
+  constructor(builder) {
+    this.builder = builder;
+  }
+
+  construct() {
+    this.builder.addWheels();
+    this.builder.addEngine();
+    this.builder.addInterior();
+    return this.builder.build();
+  }
+}
+
+// Uso
+const sedanBuilder = new SedanCarBuilder();
+const suvBuilder = new SUVCarBuilder();
+
+const sedanDirector = new CarDirector(sedanBuilder);
+const suvDirector = new CarDirector(suvBuilder);
+
+const luxurySedan = sedanDirector.construct();
+const standardSUV = suvDirector.construct();
+
+luxurySedan.showInfo(); // Output: Car parts: Sedan Wheels, Sedan Engine, Luxury Interior
+standardSUV.showInfo(); // Output: Car parts: SUV Wheels, Powerful SUV Engine, Standard Interior
 
 
 ```
-
-## Challenge
-
-![imagen]()
