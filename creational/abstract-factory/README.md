@@ -28,7 +28,6 @@ Flexibilidad:
 
 ###  Desventajas:
 
-❌    Complejidad Adicional:
 
 ❌    La implementación del patrón Abstract Factory puede aumentar la complejidad del código, especialmente cuando se tienen múltiples familias de productos y fábricas. Esto puede hacer que el código sea más difícil de entender y mantener.
 Rigidez en la Extensión:
